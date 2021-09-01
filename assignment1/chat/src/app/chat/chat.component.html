@@ -1,0 +1,55 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!------ Include the above in your HEAD tag ---------->
+
+
+
+<div class="container">
+  <div class="messaging">
+    <div class="inbox_msg">
+      <div class="inbox_people">
+
+        <div class="headind_srch">
+          <div class="recent_heading">
+            <h4>Groups</h4>
+          </div>
+        </div>
+
+        <div class="inbox_chat">
+          <div class="chat_list active_chat">
+            <div class="chat_people">
+              <div class="chat_img"> <img src="https://www.pngkit.com/png/full/128-1284523_group-chat-icon-google-group-chat-icon.png" alt="sunil"> </div>
+              <div class="chat_ib">
+                <h5>Group name</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="mesgs">
+          <div class="msg_history">
+            <div *ngFor="let message of messages">
+              <div class="incoming_msg">
+                <div class="incoming_msg_img"> <p>{{username}}</p></div>
+                <div class="received_msg">
+                  <div class="received_withd_msg">
+                    <p>{{message}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="type_msg">
+              <div class="input_msg_write">
+                <form><input type="text" [(ngModel)]="messagecontent" name="messagecontent" id="messagecontent" class="write_msg"/></form>
+                <button (click)="chat(messagecontent)" class="msg_send_btn">Send</button>
+              </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>

@@ -2,7 +2,16 @@ const express = require('express')
 const app = express();
 const cors = require('cors');
 const http =  require('http').Server(app);
-const io = require('socket.io') (http);
+const io = require('socket.io') (http, {
+    cors: {
+      origin: "http://localhost:4200",
+      methods: ["GET", "POST"],
+      allowedHeaders: [""],
+      credentials: true,
+      transports: ['websocket', 'polling']
+    },
+    allowEIO3: true
+  });
 const sockets = require('./socket.js');
 const server = require('./listen.js');
 

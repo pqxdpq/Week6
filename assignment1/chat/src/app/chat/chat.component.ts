@@ -12,11 +12,16 @@ export class ChatComponent implements OnInit {
     messagecontent:string="";
     messages:string[] = [];
     ioConnection:any;
+    username = sessionStorage.getItem('username');
+    role = sessionStorage.getItem('role');
+    
     
   constructor(private socketService:SocketService) { }
+
   ngOnInit() {
     this.initIoConnection();
   }
+  
   private initIoConnection(){
   this.socketService.initSocket();
   this.ioConnection = this.socketService.onMessage()
@@ -29,6 +34,7 @@ export class ChatComponent implements OnInit {
     if(this.messagecontent) {
     // chek there is a message to send
     this.socketService.send(this.messagecontent);
+    console.log(this.username + " says " + this.messagecontent);
     this.messagecontent=null;
     }else{
       console.log("no message");
