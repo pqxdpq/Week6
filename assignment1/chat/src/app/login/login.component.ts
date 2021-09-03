@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.checkuserloggedin();
   }
 
   userArray: Array<string>[] = [
@@ -38,5 +39,10 @@ export class LoginComponent implements OnInit {
     }this.errormessage = "Incorrect";
     
 }
+  private checkuserloggedin(){
+    if(sessionStorage.getItem('username')!= ''){
+      sessionStorage.setItem('username','');
+    }
+  }
 
 }

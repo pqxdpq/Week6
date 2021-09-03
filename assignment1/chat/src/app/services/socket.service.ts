@@ -11,12 +11,21 @@ export class SocketService {
   public initSocket(): void {
   this.socket = io(SERVER_URL);
   }
+  public chgRoom(somedata): Observable<any> {
+    this.socket.emit('passdata', somedata);
+    let observable = new Observable(observer=>{
+    this.socket.on(somedata, (data:string) => observer.next(data));
+    });
+    return observable;
+    }
+    
+  
   public send(message: string): void {
   this.socket.emit('message', message);
   }
-  public onMessage(): Observable<any> {
+  public onMessage(somedata): Observable<any> {
   let observable = new Observable(observer=>{
-  this.socket.on('message', (data:string) => observer.next(data));
+  this.socket.on(somedata, (data:string) => observer.next(data));
   });
   return observable;
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../services/socket.service';
 import {FormsModule} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -16,7 +17,7 @@ export class ChatComponent implements OnInit {
     //role = sessionStorage.getItem('role');
     groups: string[] = [];
     rooms: string[] = [];
-    
+    curroom: string;
 
     //group array
     groupArray: Array<any>[] = [
@@ -48,9 +49,10 @@ export class ChatComponent implements OnInit {
       [['user3'],[1,2,3,4,5,6,7,8,9,10,11,12]]
     ];
     
-  constructor(private socketService:SocketService) { }
+  constructor(private socketService:SocketService,private router: Router) { }
 
   ngOnInit() {
+    this.checkuserloggedin();
     this.initIoConnection();
     console.log(this.username);
     this.displaygroup();
@@ -99,7 +101,7 @@ export class ChatComponent implements OnInit {
 
   private initIoConnection(){
   this.socketService.initSocket();
-  this.ioConnection = this.socketService.onMessage()
+  this.ioConnection = this.socketService.onMessage('newroom')
   .subscribe((message:string) => {
   //add new message to the messages array.
   this.messages.push(message);
@@ -109,10 +111,29 @@ export class ChatComponent implements OnInit {
     if(this.messagecontent) {
     // chek there is a message to send
     this.socketService.send(this.messagecontent);
-    console.log(this.username + " says " + this.messagecontent);
+    console.log(this.username + " says " + this.messagecontent, ' in ',this.curroom);
     this.messagecontent=null;
     }else{
       console.log("no message");
 }
 }
+
+  private changeroom(val){
+    this.messages = [];
+    this.curroom = val;
+    this.socketService.chgRoom(this.curroom)
+    .subscribe((message:string) => {
+    //add new message to the messages array.
+    this.messages.push(message);
+    });
+  }
+
+  private checkuserloggedin(){
+    if(sessionStorage.getItem('username')){
+      //
+    }else{
+      this.router.navigate(['login']); 
+    }
+  }
+
 }

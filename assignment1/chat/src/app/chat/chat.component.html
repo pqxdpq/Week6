@@ -44,6 +44,7 @@
 
         <div class="inbox_chat">
           <div *ngFor="let room of rooms">
+            <button (click)="changeroom(room)" class="unstyled-button">
             <div class="chat_list active_chat">
               <div class="chat_people">
                 <div class="chat_img"> <img src="https://www.pngkit.com/png/full/128-1284523_group-chat-icon-google-group-chat-icon.png" alt="sunil"> </div>
@@ -52,6 +53,7 @@
                 </div>
               </div>
             </div>
+            </button>
           </div>  
         </div>
       </div>
