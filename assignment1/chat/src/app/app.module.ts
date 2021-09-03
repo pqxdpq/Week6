@@ -7,12 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SocketService } from './services/socket.service';
 import { LoginComponent } from './login/login.component';
+import { CreateAccountComponent } from './create-account/create-account.component';
  
 @NgModule({
   declarations: [
     AppComponent,
     ChatComponent,
-    LoginComponent
+    LoginComponent,
+    CreateAccountComponent
   ],
   imports: [
     BrowserModule,

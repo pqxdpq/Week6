@@ -4,8 +4,6 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!------ Include the above in your HEAD tag ---------->
 
-
-
 <div class="container">
   <div class="messaging">
     <div class="inbox_msg">
@@ -19,6 +17,12 @@
         </div>
 
         <div class="inbox_chat">
+          <div class="chat_list active_chat" *ngIf='srole || grole'>
+            <div class="chat_people">
+              <input type='text' [(ngModel)]="newgroupname">
+              <button (click)="addGroup()">Add</button>
+            </div>
+          </div>
           <div *ngFor="let group of groups">
             <button (click)="displayroom(group)" class="unstyled-button">
             <div class="chat_list active_chat">
@@ -43,6 +47,12 @@
         </div>
 
         <div class="inbox_chat">
+          <div class="chat_list active_chat" *ngIf='srole || grole || arole'>
+            <div class="chat_people">
+              <input type='text' [(ngModel)]="newroomname">
+              <button (click)="addRoom()">Add</button>
+            </div>
+          </div>
           <div *ngFor="let room of rooms">
             <button (click)="changeroom(room)" class="unstyled-button">
             <div class="chat_list active_chat">
@@ -69,6 +79,7 @@
                 <div class="received_msg">
                   <div class="received_withd_msg">
                     <p>{{message}}</p>
+                    <br>
                   </div>
                 </div>
               </div>
@@ -76,8 +87,8 @@
             </div>
             <div class="type_msg">
               <div class="input_msg_write">
-                <form><input type="text" [(ngModel)]="messagecontent" name="messagecontent" id="messagecontent" class="write_msg"/></form>
-                <button (click)="chat(messagecontent)" class="msg_send_btn">Send</button>
+                <form><input type="text" [(ngModel)]="messagecontent" name="messagecontent" id="messagecontent" class="write_msg"/>
+                <button (click)="chat(messagecontent)" class="msg_send_btn">Send</button></form>
               </div>
             </div>
         </div>

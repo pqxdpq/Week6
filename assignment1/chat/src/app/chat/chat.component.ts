@@ -14,10 +14,16 @@ export class ChatComponent implements OnInit {
     messages:string[] = [];
     ioConnection:any;
     username = sessionStorage.getItem('username');
-    //role = sessionStorage.getItem('role');
+    srole:boolean;
+    grole:boolean;
+    arole:boolean;
+    auth= sessionStorage.getItem('role');
     groups: string[] = [];
     rooms: string[] = [];
     curroom: string;
+    curgroup:string;
+    newgroupname:string="";
+    newroomname:string="";
 
     //group array
     groupArray: Array<any>[] = [
@@ -41,30 +47,52 @@ export class ChatComponent implements OnInit {
 
     //A list of which users are in each group and rooms. 
     authArray: Array<Array<any>[]> = [
-      [['sadmin'],[1,2,3,4,5,6,7,8,9,10,11,12]],
-      [['gadmin'],[1,2,3,4,5,6,7,8,9,10,11,12]],
-      [['aadmin'],[1,2,3,4,5,6,7,8,9,10,11,12]],
-      [['user1'],[1,2,3,4,5,6,7,8,9,10,11,12]],
-      [['user2'],[1,2,3,4,5,6,7,8,9,10,11,12]],
-      [['user3'],[1,2,3,4,5,6,7,8,9,10,11,12]]
+      [['sadmin'],[1,2,3,4,5,6,7,8,9,10,11,12],['sadmin']],
+      [['gadmin'],[1,2,3,4,5,6,7,8,9,10,11,12],['gadmin']],
+      [['aadmin'],[1,2,3,4,5,6,7,8,9,10,11,12],['aadmin']],
+      [['user'],[1,2,4,5,6,7,8,10,11,12],['user1']],
+      [['user'],[1,2,4,5,6,7,8,10,11,12],['user2']],
+      [['user'],[1,2,4,5,6,7,8,10,11,12],['user3']]
     ];
+    largest = this.authArray[0][1][0];
     
   constructor(private socketService:SocketService,private router: Router) { }
 
   ngOnInit() {
     this.checkuserloggedin();
+    this.checkauth();
     this.initIoConnection();
     console.log(this.username);
     this.displaygroup();
     localStorage.setItem('groups', JSON.stringify(this.groups));
-    console.log(this.groups);
+  }
+
+  checkauth(){
+    if(this.auth == 'sadmin'){
+      this.srole = true;
+    }
+    if(this.auth == 'gadmin'){
+      this.grole = true;
+    }
+    if(this.auth == 'aadmin'){
+      this.arole = true;
+    }
+  }
+
+  getlargest(){
+    for (var i=0; i<this.authArray[0][1].length;i++){
+      if (this.largest < this.authArray[0][1][i]){
+        this.largest = this.authArray[0][1][i]+1;
+      }
+  }
   }
 
   private displaygroup(){
+    this.groups.length = 0;
     var uservar;
     for(let i in this.authArray){
       //find the accessable groups and rooms for current user
-      if (this.username = this.authArray[i][0][0]){
+      if (this.username == this.authArray[i][2][0]){
         uservar = i;
       }
     }
@@ -78,12 +106,13 @@ export class ChatComponent implements OnInit {
     }
 
   private displayroom(groupname){
+    this.curgroup = groupname;
     this.rooms.length = 0;
     var uservar;
     console.log(groupname);
     for(let i in this.authArray){
       //find the accessable groups and rooms for current user
-      if (this.username = this.authArray[i][0][0]){
+      if (this.username == this.authArray[i][2][0]){
         uservar = i;
       }
     }
@@ -96,7 +125,6 @@ export class ChatComponent implements OnInit {
           }
         }         
       }
-      console.log(this.rooms);
     }
 
   private initIoConnection(){
@@ -136,4 +164,28 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  private pushNumToAuth(num){
+    for(let i in this.authArray){
+      if(this.authArray[i][0][0] == "sadmin" || this.authArray[i][0][0] == "gadmin" || this.authArray[i][0][0] == "aadmin"){
+        this.authArray[i][1].push(num);
+      }
+    }
+  }
+
+  private addGroup(){
+    this.getlargest();
+    var gpnum = this.largest;
+    this.groupArray.push([this.newgroupname,gpnum]);
+    this.displaygroup();
+  }
+
+  private addRoom(){
+    if(this.curgroup != undefined){
+      this.getlargest();
+      var roomnum = this.largest;
+      this.roomArray.push([this.curgroup,this.newroomname,roomnum]);
+      this.pushNumToAuth(roomnum);
+      this.displayroom(this.curgroup);
+    }
+  }
 }
