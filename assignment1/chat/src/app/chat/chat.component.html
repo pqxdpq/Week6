@@ -9,6 +9,7 @@
 <div class="container">
   <div class="messaging">
     <div class="inbox_msg">
+
       <div class="inbox_people">
 
         <div class="headind_srch">
@@ -18,16 +19,45 @@
         </div>
 
         <div class="inbox_chat">
-          <div class="chat_list active_chat">
-            <div class="chat_people">
-              <div class="chat_img"> <img src="https://www.pngkit.com/png/full/128-1284523_group-chat-icon-google-group-chat-icon.png" alt="sunil"> </div>
-              <div class="chat_ib">
-                <h5>Group name</h5>
+          <div *ngFor="let group of groups">
+            <button (click)="displayroom(group)" class="unstyled-button">
+            <div class="chat_list active_chat">
+              <div class="chat_people">
+                <div class="chat_img"> <img src="https://www.pngkit.com/png/full/128-1284523_group-chat-icon-google-group-chat-icon.png" alt="sunil"> </div>
+                <div class="chat_ib">
+                  <h5>{{group}}</h5>
+                </div>
               </div>
             </div>
+            </button>
           </div>
         </div>
       </div>
+
+      <div class="inbox_people2">
+
+        <div class="headind_srch">
+          <div class="recent_heading">
+            <h4>Channels</h4>
+          </div>
+        </div>
+
+        <div class="inbox_chat">
+          <div *ngFor="let room of rooms">
+            <div class="chat_list active_chat">
+              <div class="chat_people">
+                <div class="chat_img"> <img src="https://www.pngkit.com/png/full/128-1284523_group-chat-icon-google-group-chat-icon.png" alt="sunil"> </div>
+                <div class="chat_ib">
+                  <h5>{{room}}</h5>
+                </div>
+              </div>
+            </div>
+          </div>  
+        </div>
+      </div>
+
+
+      
 
         <div class="mesgs">
           <div class="msg_history">
