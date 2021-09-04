@@ -14,18 +14,18 @@ export class SocketService {
   public chgRoom(somedata): Observable<any> {
     this.socket.emit('passdata', somedata);
     let observable = new Observable(observer=>{
-    this.socket.on(somedata, (data:string) => observer.next(data));
+    this.socket.on(somedata, (data:[string, string]) => observer.next(data));
     });
     return observable;
     }
     
   
-  public send(message: string): void {
-  this.socket.emit('message', message);
+  public send(message: string, name:string): void {
+  this.socket.emit('message', [message,name]);
   }
   public onMessage(somedata): Observable<any> {
   let observable = new Observable(observer=>{
-  this.socket.on(somedata, (data:string) => observer.next(data));
+  this.socket.on(somedata, (data:[string, string]) => observer.next(data));
   });
   return observable;
   }

@@ -1,16 +1,27 @@
-.container{max-width:1170px; margin:auto;}
+.container{max-width:95%; margin:auto;}
 img{ max-width:100%;}
 .inbox_people {
   background: #f8f8f8 none repeat scroll 0 0;
   float: left;
   overflow: hidden;
   width: 15%; border-right:1px solid #c4c4c4;
+  height: 603.98px;
 }
 .inbox_people2 {
     background: #f8f8f8 none repeat scroll 0 0;
     float: left;
     overflow: hidden;
     width: 15%; border-right:1px solid #c4c4c4;
+    height: 603.98px;
+  }
+  .inbox_people3 {
+    background: #f8f8f8 none repeat scroll 0 0;
+    float: left;
+    overflow: hidden;
+    height: 603.98px;
+    width: 13%; 
+    border-right:1px solid #c4c4c4;
+    border-left: 1px solid black;
   }
 .inbox_msg {
   border: 1px solid #c4c4c4;
@@ -24,7 +35,7 @@ img{ max-width:100%;}
     color: #cccccc;
 } 
 
-.recent_heading {float: left; width:40%;}
+.recent_heading {float: left; display: inline; width:40%;}
 .srch_bar {
   display: inline-block;
   text-align: right;
@@ -47,26 +58,33 @@ img{ max-width:100%;}
 }
 .srch_bar .input-group-addon { margin: 0 0 0 -27px;}
 
-.chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
+.chat_ib h5{ font-size:15px; color:#464646; margin:0;}
 .chat_ib h5 span{ font-size:13px; float:right;}
-.chat_ib p{ font-size:14px; color:#989898; margin:auto}
+.chat_ib p{ font-size:14px; color:#989898; margin:0}
 .chat_img {
   float: left;
-  width: 11%;
+  width: 15%;
 }
 .chat_ib {
   float: left;
-  padding: 0 0 0 15px;
-  width: 88%;
+  padding:0;
+  width: 70%;
 }
 
 .chat_people{ overflow:hidden; clear:both;}
 .chat_list {
   border-bottom: 1px solid #c4c4c4;
   margin: 0;
-  padding: 18px 16px 10px;
+  padding: 5px 5px 8px;
+}
+.user_list{
+  border-bottom: 1px solid #c4c4c4;
+  margin: 0;
+  padding: 2px 0px 2px;
 }
 .inbox_chat { height: 550px; overflow-y: scroll;}
+
+.inbox_chat2 { height: 596px; overflow-y: scroll;}
 
 .active_chat{ background:#ebebeb;}
 
@@ -98,9 +116,11 @@ img{ max-width:100%;}
 .received_withd_msg { width: 57%;}
 .mesgs {
   float: left;
-  padding: 30px 15px 0 25px;
-  width: 70%;
+  padding: 30px 0px 0 0px;
+  width: 57%;
   background: #f8f8f8 none repeat scroll 0 0;
+  height: 603.98px;
+
 }
 
  .sent_msg p {
@@ -125,7 +145,9 @@ img{ max-width:100%;}
   width: 100%;
 }
 
-.type_msg {border: 2px solid #000000;position: relative;}
+.delbtn {border:0; padding: 0; border-radius: 50%;height: auto; width: 15%; float: right;}
+
+.type_msg {border: 2px solid #000000;margin:0px 10px 0px 10px; position: relative;}
 .msg_send_btn {
   background: #05728f none repeat scroll 0 0;
   border: medium none;
@@ -150,3 +172,14 @@ img{ max-width:100%;}
     padding: 0;
     background: none;
   }
+
+.logoutbtn{
+  display: inline;
+  float: left;
+  width: 40%;
+}
+.acbtn{
+  display: inline;
+  float: right;
+  width: 40%;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../services/socket.service';
 import {FormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-chat',
@@ -11,9 +12,10 @@ import { Router } from '@angular/router';
 export class ChatComponent implements OnInit {
 
     messagecontent:string="";
-    messages:string[] = [];
+    messages:any[] = [];
     ioConnection:any;
     username = sessionStorage.getItem('username');
+    itself:boolean;
     srole:boolean;
     grole:boolean;
     arole:boolean;
@@ -24,6 +26,7 @@ export class ChatComponent implements OnInit {
     curgroup:string;
     newgroupname:string="";
     newroomname:string="";
+    users:string[] = [];
 
     //group array
     groupArray: Array<any>[] = [
@@ -79,9 +82,15 @@ export class ChatComponent implements OnInit {
     }
   }
 
+  account(){
+    if(this.auth == 'sadmin' ||this.auth == 'gadmin'||this.auth == 'aadmin'){
+      this.router.navigate(['createac']);
+    }
+  }
+
   getlargest(){
     for (var i=0; i<this.authArray[0][1].length;i++){
-      if (this.largest < this.authArray[0][1][i]){
+      if (this.largest <= this.authArray[0][1][i]){
         this.largest = this.authArray[0][1][i]+1;
       }
   }
@@ -109,7 +118,6 @@ export class ChatComponent implements OnInit {
     this.curgroup = groupname;
     this.rooms.length = 0;
     var uservar;
-    console.log(groupname);
     for(let i in this.authArray){
       //find the accessable groups and rooms for current user
       if (this.username == this.authArray[i][2][0]){
@@ -138,21 +146,25 @@ export class ChatComponent implements OnInit {
   private chat() {
     if(this.messagecontent) {
     // chek there is a message to send
-    this.socketService.send(this.messagecontent);
+    this.itself = true;
+    this.socketService.send(this.messagecontent,this.username);
     console.log(this.username + " says " + this.messagecontent, ' in ',this.curroom);
     this.messagecontent=null;
+    this.itself = false;
     }else{
       console.log("no message");
 }
 }
 
   private changeroom(val){
+    this.getusers(val);
+    console.log(this.users);
     this.messages = [];
     this.curroom = val;
     this.socketService.chgRoom(this.curroom)
-    .subscribe((message:string) => {
+    .subscribe(([message, name]) => {
     //add new message to the messages array.
-    this.messages.push(message);
+    this.messages.push([message, name]);
     });
   }
 
@@ -173,19 +185,104 @@ export class ChatComponent implements OnInit {
   }
 
   private addGroup(){
+    for(let i in this.groupArray){
+      if(this.groupArray[i][0] == this.newgroupname){
+        console.log('name used!');
+        return;
+      }
+    }
+    console.log('got there')
     this.getlargest();
     var gpnum = this.largest;
     this.groupArray.push([this.newgroupname,gpnum]);
+    this.pushNumToAuth(gpnum);
     this.displaygroup();
   }
 
   private addRoom(){
+    for(let i in this.roomArray){
+      if(this.roomArray[i][0] == this.curgroup && this.roomArray[i][1] == this.newroomname){
+        console.log('name used!');
+        return;
+      }
+    }
     if(this.curgroup != undefined){
       this.getlargest();
       var roomnum = this.largest;
       this.roomArray.push([this.curgroup,this.newroomname,roomnum]);
       this.pushNumToAuth(roomnum);
       this.displayroom(this.curgroup);
+      console.log(this.rooms);
+      console.log(this.roomArray);
+    }
+  }
+
+  getGpRmIDByname(val){
+    for(let i in this.groupArray){
+      console.log(this.groupArray[i][0], val)
+      if (this.groupArray[i][0][0] == val){
+        console.log('found',this.groupArray[i][0][0])
+        return this.groupArray[i][1];
+      }
+    }
+    for(let i in this.roomArray){
+      if (this.roomArray[i][1]== val){
+        console.log('found',this.roomArray[i][1][0])
+        return this.roomArray[i][2];
+      }
+    }
+  }
+
+  private logout(){
+    sessionStorage.setItem('role','');
+    sessionStorage.setItem('username', '');
+    this.router.navigate(['login']); 
+  }
+
+  private getusers(rm){
+    this.users= [];
+    var rmid = this.getGpRmIDByname(rm)
+    ///console.log(rmn)
+    for(let i in this.authArray){
+        console.log(this.authArray[i][1],rmid)
+        if (this.authArray[i][1].includes(rmid)){
+          this.users.push(this.authArray[i][2][0]);
+          console.log(this.authArray[i][2][0])
+        }
+    }
+  }
+
+  private rmgroup(name){
+    var id = this.getGpRmIDByname(name);
+    for (let i = 0; i <this.roomArray.length;i++){
+      if (this.roomArray[i][0] == name){
+        this.rmroom(this.roomArray[i][1]);
+      }
+    }
+    for (let i in this.groupArray){
+      if(this.groupArray[i][0] == name){
+        this.groupArray.splice(Number(i),1);
+      }
+    }
+  }
+
+  private rmroom(name){
+    var id = this.getGpRmIDByname(name);
+    for (let i in this.roomArray){
+      if(this.curgroup == this.roomArray[i][0] && name == this.roomArray[i][1]){
+        for(let x in this.authArray){
+          this.authArray[x][1].forEach((element, index)=>{
+            if(element == id)this.authArray[x][1].splice(index,1);
+            this.displayroom(this.curgroup);
+            console.log('doing')
+          });
+        }
+      }
+    }
+    for(let x in this.roomArray){
+      if(this.roomArray[x][2] == id){
+        this.roomArray.splice(Number(x), 1);
+      }
     }
   }
 }

@@ -1,3 +1,30 @@
-<p>
-  create-account works!
-</p>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+  <div class="messaging">
+    <div class="inbox_msg">   
+      <div class="ac">
+      
+      </div>
+
+        <div class="inbox_people3">
+          <div class="headind_srch">
+
+              <button (click)="logout()" class="logoutbtn"><img src="../../assets/logoutbyn.png"></button>
+              <button (click)="chat()" class="acbtn" ><img src="../../assets/chat.png"></button>
+    
+          </div>
+          <div class="inbox_chat">
+            <div class="user_list" *ngFor='let user of userArray'>
+              <p>{{user[0]}}</p>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>

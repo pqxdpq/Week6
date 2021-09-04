@@ -31,6 +31,7 @@
                 <div class="chat_ib">
                   <h5>{{group}}</h5>
                 </div>
+                <button *ngIf='srole || grole' (click)="rmgroup(group)" class="delbtn"><img src="../../assets/delbtn.png"></button>
               </div>
             </div>
             </button>
@@ -61,6 +62,7 @@
                 <div class="chat_ib">
                   <h5>{{room}}</h5>
                 </div>
+                <button *ngIf='srole || grole || arole' (click)="rmroom(room)" class="delbtn"><img src="../../assets/delbtn.png"></button>
               </div>
             </div>
             </button>
@@ -74,15 +76,22 @@
         <div class="mesgs">
           <div class="msg_history">
             <div *ngFor="let message of messages">
-              <div class="incoming_msg">
-                <div class="incoming_msg_img"> <p>{{username}}</p></div>
+              <div class="incoming_msg" *ngIf="itself == false; else outgoing">
+                <div class="incoming_msg_img"><p>{{message[1]}}:</p></div>
                 <div class="received_msg">
                   <div class="received_withd_msg">
-                    <p>{{message}}</p>
+                    <p>{{message[0]}}</p>
                     <br>
                   </div>
                 </div>
               </div>
+              <ng-template #outgoing>
+                <div class="outgoing_msg">
+                  <div class="sent_msg">
+                    <p>{{message[0]}}</p>
+                  </div>
+                </div>
+              </ng-template>
             </div>
             </div>
             <div class="type_msg">
@@ -91,6 +100,20 @@
                 <button (click)="chat(messagecontent)" class="msg_send_btn">Send</button></form>
               </div>
             </div>
+        </div>
+
+        <div class="inbox_people3">
+          <div class="headind_srch">
+
+              <button (click)="logout()" class="logoutbtn"><img src="../../assets/logoutbyn.png"></button>
+              <button (click)="account()" class="acbtn" ><img src="../../assets/account.png"></button>
+    
+          </div>
+          <div class="inbox_chat">
+            <div class="user_list" *ngFor='let user of users'>
+              <p>{{user}}</p>
+            </div>
+          </div>
         </div>
 
     </div>

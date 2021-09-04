@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonService } from '../services/common.service';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +15,6 @@ export class LoginComponent implements OnInit {
   role = "";
   errormessage = "";
 
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-    this.checkuserloggedin();
-  }
-
   userArray: Array<string>[] = [
     ['sadmin', 'admin@gmail.com', 'sadmin', 'sadmin'],
     ['gadmin','gadmin@gmail.com', 'gadmin', 'gadmin'],
@@ -30,11 +25,22 @@ export class LoginComponent implements OnInit {
 ];
 
 
+  constructor(private router: Router, private _commonService: CommonService) {
+   }
+
+  ngOnInit() {
+    this.checkuserloggedin();
+  }
+
+
   LoginClicked() {
     for (var i = 0; i < this.userArray.length; i++){
       if (this.username == this.userArray[i][0] && this.password == this.userArray[i][2]){
         sessionStorage.setItem("username", this.username);
         sessionStorage.setItem("role", this.userArray[i][3]);
+        if (this.userArray[i][3] == 'sadmin'||this.userArray[i][3] == 'gadmin'||this.userArray[i][3] == 'aadmin')
+        this._commonService.shareduserarray = this.userArray;
+        sessionStorage.setItem('userarray', JSON.stringify(this.userArray));
         this.router.navigate(['chat']);         
       }
     }this.errormessage = "Incorrect";
