@@ -30,8 +30,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.checkuserloggedin();
+    this.checkuserarray();
   }
 
+  checkuserarray(){
+    if(sessionStorage.getItem('userarray')== null){
+      return;
+    }else{
+      this.userArray = JSON.parse(sessionStorage.getItem('userarray'));
+    }
+  }
 
   LoginClicked() {
     for (var i = 0; i < this.userArray.length; i++){

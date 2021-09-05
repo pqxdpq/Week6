@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit {
     messages:any[] = [];
     ioConnection:any;
     username = sessionStorage.getItem('username');
+    curusername = sessionStorage.setItem('curusername', this.username);
     itself:boolean;
     srole:boolean;
     grole:boolean;
@@ -71,7 +72,10 @@ export class ChatComponent implements OnInit {
   }
 
   updateautharray(){
-    this.authArray = JSON.parse(sessionStorage.getItem('autharray'));
+    if(sessionStorage.getItem('autharray')){
+      this.authArray = JSON.parse(sessionStorage.getItem('autharray'));
+    }
+    
   }
 
   checkauth(){
@@ -89,6 +93,8 @@ export class ChatComponent implements OnInit {
   account(){
     if(this.auth == 'sadmin' ||this.auth == 'gadmin'||this.auth == 'aadmin'){
       sessionStorage.setItem('autharray', JSON.stringify(this.authArray));
+      sessionStorage.setItem('gparray', JSON.stringify(this.groupArray));
+      sessionStorage.setItem('rmarray', JSON.stringify(this.roomArray));
       this.router.navigate(['createac']);
     }
   }

@@ -43,7 +43,13 @@
             </small><br>
           </div>
           <button (click)="savechanges()">save</button>
+          <button *ngIf="deletecheck" (click)="confirmdel()" class="delete">Confirm</button>
+          <button  (click)="deletecheckfc()" class="delete">Delete User</button>
         </form>
+      </div>
+      <div class="ac4gprm">
+        <div class="displaygplist"></div>
+        <div class="displayrmlist"></div>
       </div>
 
         <div class="inbox_people3">
