@@ -8,7 +8,42 @@
   <div class="messaging">
     <div class="inbox_msg">   
       <div class="ac">
-      
+        <img src="../../assets/icon.png" class="icon">
+        <form>
+          <div class="form-group">
+            <label for="username" class="inputlabel">Username:</label>
+            <input type="username" [(ngModel)]="username" name="username" class="uneditableinput" readonly>
+            <small id="usernameHelpInline" class="text-muted">
+              Username can only modify when create account.
+            </small><br>
+            <label label for="email" class="inputlabel">Email:</label>
+            <input type="email" id="email" [(ngModel)]="email" name="email" >
+            <small id="emailHelpInline" class="text-muted">
+              Please input valid email.
+            </small><br>
+            <label label for="password" class="inputlabel">Password:</label>
+            <input type="password" id="password" [(ngModel)]="password" name="password" >
+            <small id="PasswordHelpInline" class="text-muted">
+              Must be 8-20 characters long.
+            </small><br>
+            <label label for="password" class="inputlabel">Password Confirm:</label>
+            <input type="cfpassword" id="cfpassword" [(ngModel)]="password" name="password" >
+            <small id="PasswordHelpInline" class="text-muted">
+              Repeat your password.
+            </small><br>
+            <label label for="role" class="inputlabel">Role:</label>
+            <select [(ngModel)]="role" name="role" [disabled]="username==='sadmin'">
+              <option value=""></option>
+              <option value="gadmin">Group Admin</option>
+              <option value="aadmin">Assist Admin</option>
+              <option value="user">Normal User</option>
+            </select>
+            <small id="PasswordHelpInline" class="text-muted">
+              Must be 8-20 characters long.
+            </small><br>
+          </div>
+          <button (click)="savechanges()">save</button>
+        </form>
       </div>
 
         <div class="inbox_people3">
@@ -19,8 +54,14 @@
     
           </div>
           <div class="inbox_chat">
+            <div class="user_list">
+              <div class="checkinput"><input  type="text" id="newname" [(ngModel)]="newname" name="newname" placeholder="" required pattern="\S+.*"/></div>
+            </div>
+            <div class="user_list">
+              <button class="button5" (click)="adduser()">++ Add New User ++</button>
+            </div>
             <div class="user_list" *ngFor='let user of userArray'>
-              <p>{{user[0]}}</p>
+              <button class="button4" (click)="selectuser(user)">{{user[0]}}</button>
             </div>
           </div>
         </div>

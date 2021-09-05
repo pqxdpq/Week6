@@ -76,7 +76,7 @@
         <div class="mesgs">
           <div class="msg_history">
             <div *ngFor="let message of messages">
-              <div class="incoming_msg" *ngIf="itself == false; else outgoing">
+              <div class="incoming_msg" *ngIf="message[1] != username; else outgoing">
                 <div class="incoming_msg_img"><p>{{message[1]}}:</p></div>
                 <div class="received_msg">
                   <div class="received_withd_msg">

@@ -70,6 +70,10 @@ export class ChatComponent implements OnInit {
     localStorage.setItem('groups', JSON.stringify(this.groups));
   }
 
+  updateautharray(){
+    this.authArray = JSON.parse(sessionStorage.getItem('autharray'));
+  }
+
   checkauth(){
     if(this.auth == 'sadmin'){
       this.srole = true;
@@ -84,6 +88,7 @@ export class ChatComponent implements OnInit {
 
   account(){
     if(this.auth == 'sadmin' ||this.auth == 'gadmin'||this.auth == 'aadmin'){
+      sessionStorage.setItem('autharray', JSON.stringify(this.authArray));
       this.router.navigate(['createac']);
     }
   }
@@ -146,11 +151,9 @@ export class ChatComponent implements OnInit {
   private chat() {
     if(this.messagecontent) {
     // chek there is a message to send
-    this.itself = true;
     this.socketService.send(this.messagecontent,this.username);
     console.log(this.username + " says " + this.messagecontent, ' in ',this.curroom);
     this.messagecontent=null;
-    this.itself = false;
     }else{
       console.log("no message");
 }

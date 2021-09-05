@@ -7,6 +7,17 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class CommonService {
+
+  jsonItem = {};
   public shareduserarray: Array<string>[];
+
+  setItem(key, item){
+    this.jsonItem[key] = item;
+  }
+
+  getItem(key){
+    return this.jsonItem[key];
+  }
+
   constructor() { }
 }
