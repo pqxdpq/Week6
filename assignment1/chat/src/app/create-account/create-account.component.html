@@ -24,7 +24,7 @@
             <label label for="password" class="inputlabel">Password:</label>
             <input type="password" id="password" [(ngModel)]="password" name="password" >
             <small id="PasswordHelpInline" class="text-muted">
-              Must be 8-20 characters long.
+              You password here.
             </small><br>
             <label label for="password" class="inputlabel">Password Confirm:</label>
             <input type="cfpassword" id="cfpassword" [(ngModel)]="password" name="password" >
@@ -32,14 +32,21 @@
               Repeat your password.
             </small><br>
             <label label for="role" class="inputlabel">Role:</label>
-            <select [(ngModel)]="role" name="role" [disabled]="username==='sadmin'">
+            <select *ngIf="curuserrole==='sadmin'" [(ngModel)]="role" name="role" [disabled]="username===curusername">
+              <option value=""></option>
+              <option value="sadmin">Super Admin</option>
+              <option value="gadmin">Group Admin</option>
+              <option value="aadmin">Assist Admin</option>
+              <option value="user">Normal User</option>
+            </select>
+            <select *ngIf="curuserrole==='gadmin'" [(ngModel)]="role" name="role" [disabled]="username===curusername || role==='sadmin'">
               <option value=""></option>
               <option value="gadmin">Group Admin</option>
               <option value="aadmin">Assist Admin</option>
               <option value="user">Normal User</option>
             </select>
             <small id="PasswordHelpInline" class="text-muted">
-              Must be 8-20 characters long.
+              Change User Role.
             </small><br>
           </div>
           <button (click)="savechanges()">save</button>
@@ -48,8 +55,38 @@
         </form>
       </div>
       <div class="ac4gprm">
-        <div class="displaygplist"></div>
-        <div class="displayrmlist"></div>
+        <div class="displaygplist">
+          <h1>Group List</h1>
+          <div class="list">
+            <div *ngFor="let group of curusergroup">
+              <h3>{{group}}</h3>
+            </div>
+          </div>
+          <div>
+            <form>
+              <select [(ngModel)]="avaliablegroupArray[i]" name="avaliablegroupArray{{i}}">
+                <option *ngFor="let agp of avaliablegroupArray" [ngValue]="agp">{{agp[0]}}</option>
+              </select>
+              <button (click)="addtogroup(avaliablegroupArray[i])">Add</button>
+            </form>
+          </div>
+        </div>
+        <div class="displayrmlist">
+          <h1>Room List</h1>
+          <div class="list">  
+            <div *ngFor="let room of curuserroom">
+              <h3>{{room}}</h3>
+            </div>
+          </div>
+          <div>
+            <form>
+              <select [(ngModel)]="avaliableroomArray[i]" name="avaliableroomArray{{i}}">
+                <option *ngFor="let arm of avaliableroomArray" [ngValue]="arm">{{arm[0]}},{{arm[1]}}</option>
+              </select>
+              <button (click)="addtoroom(avaliableroomArray[i])">Add</button>
+            </form>
+          </div>
+        </div>
       </div>
 
         <div class="inbox_people3">

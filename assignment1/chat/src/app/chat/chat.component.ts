@@ -66,16 +66,16 @@ export class ChatComponent implements OnInit {
     this.checkuserloggedin();
     this.checkauth();
     this.initIoConnection();
+    this.getarray();
     console.log(this.username);
     this.displaygroup();
     localStorage.setItem('groups', JSON.stringify(this.groups));
   }
 
-  updateautharray(){
-    if(sessionStorage.getItem('autharray')){
-      this.authArray = JSON.parse(sessionStorage.getItem('autharray'));
-    }
-    
+  private getarray(){
+    this.authArray = JSON.parse(sessionStorage.getItem('autharray'));
+    this.groupArray = JSON.parse(sessionStorage.getItem('gparray'));
+    this.roomArray = JSON.parse(sessionStorage.getItem('rmarray'));
   }
 
   checkauth(){

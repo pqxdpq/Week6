@@ -201,3 +201,18 @@ img{ max-width:100%;}
   float: right;
   width: 40%;
 }
+.displaygplist{
+    width: 50%;
+    float: left;
+    height: 100%;
+}
+.displayrmlist{
+    width: 50%;
+    float:right;
+    height: 100%;
+}
+
+.list{
+    height: 50%;
+    overflow-y: scroll;
+}
