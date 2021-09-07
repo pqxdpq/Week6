@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { element } from 'protractor';
 import { LoginComponent } from '../login/login.component';
 import { CommonService } from '../services/common.service';
 
@@ -107,13 +108,13 @@ export class CreateAccountComponent implements OnInit {
           //group
           for (let g in this.groupArray){
             if(this.authArray[i][1][x] == this.groupArray[g][1]){
-              this.curusergroup.push(this.groupArray[g][0]);
+              this.curusergroup.push(this.groupArray[g]);
             }
           }
           //room
           for(let t in this.roomArray){
             if(this.authArray[i][1][x] == this.roomArray[t][2]){
-              this.curuserroom.push(this.roomArray[t][1])
+              this.curuserroom.push(this.roomArray[t])
             }
           }
         }
@@ -124,13 +125,16 @@ export class CreateAccountComponent implements OnInit {
         }
         for(let p in this.roomArray){
           if(!(this.authArray[i][1].includes(this.roomArray[p][2]))){
-            if(this.curusergroup.includes(this.roomArray[p][0])){
+            for(let i in this.curusergroup){
+              if(this.curusergroup[i].includes(this.roomArray[p][0])){
               this.avaliableroomArray.push(this.roomArray[p]);
-            }         
+              }  
+            }                 
           }
         }
       }
     }
+    console.log(this.curusergroup);
   }
 
   private checkuserloggedin(){
@@ -215,6 +219,34 @@ export class CreateAccountComponent implements OnInit {
         this.selectuser(this.username);
       }
     }
+  }
+
+  private removefromroom(array){
+    for(let i in this.authArray){
+      if(this.authArray[i][2][0] == this.username){
+        this.authArray[i][1].forEach((element, index)=>{
+          if(element==array[2]) this.authArray[i][1].splice(index, 1);
+        });
+      }
+    }
+    this.selectuser(this.username);
+  }
+
+  private removefromgroup(array){
+    for(let x in this.curuserroom){
+      if (this.curuserroom[x][0] == array[0]){
+        alert('Please remove user from related room first.');
+        return;
+      }
+    }
+    for(let i in this.authArray){
+      if(this.authArray[i][2][0] == this.username){
+        this.authArray[i][1].forEach((element, index)=>{
+          if(element==array[1]) this.authArray[i][1].splice(index, 1);
+        });
+      }
+    }
+    this.selectuser(this.username);
   }
 
 }
