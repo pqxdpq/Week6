@@ -17,17 +17,17 @@ should be displayed in available list, etc.
 ### Data Structures
 In my project, there are 4 main data groups, I will show them in a table for better view.
 ** Auth Table **
-Permission lvl | Accessed room/group code | User name
-----------------|---------------|---------------
-sadmin| 1,2,3,4,5,6,7,8 | sadmin
-gadmin| 1,2,3,4,5,6,7,8 | gadmin
-aadmin| 1,2,3,4,5,6,7,8 | aadmin
-user| 1,2,3,4,5,8 | Billy
-user| 1,2,3,5,6,7,8 | Oliver
-user| 4,5,6,7,8 | Amy
+|Permission lvl | Accessed room/group code | User name|
+|----------------|---------------|---------------|
+|sadmin| 1,2,3,4,5,6,7,8 | sadmin|
+|gadmin| 1,2,3,4,5,6,7,8 | gadmin|
+|aadmin| 1,2,3,4,5,6,7,8 | aadmin|
+|user| 1,2,3,4,5,8 | Billy|
+|user| 1,2,3,5,6,7,8 | Oliver|
+|user| 4,5,6,7,8 | Amy|
 
 ** Group Table **
-Group name | Code
+|Group name | Code
 ----------------|---------------
 National | 1
 FPS game | 2
