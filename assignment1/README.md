@@ -27,32 +27,32 @@ In my project, there are 4 main data groups, I will show them in a table for bet
 |user| 4,5,6,7,8 | Amy|
 
 ** Group Table **
-|Group name | Code
-----------------|---------------
-National | 1
-FPS game | 2
-Hunting | 3
-Basketball | 4
+|Group name | Code|
+|----------------|---------------|
+|National | 1|
+|FPS game | 2|
+|Hunting | 3|
+|Basketball | 4|
 
 ** Room Table **
-Parent name | Room name | room code
-----------------|---------------|----------
-National | Animals | 5
-National | Plants | 6
-FPS game | aiming | 7
-FPS game | patch notes | 8
-Hunting | Places | 9
-Basketball | Players | 10
+|Parent name | Room name | room code|
+|----------------|---------------|----------|
+|National | Animals | 5|
+|National | Plants | 6|
+|FPS game | aiming | 7|
+|FPS game | patch notes | 8|
+|Hunting | Places | 9|
+|Basketball | Players | 10|
 
 ** User Table **
-Name | Email | Password | Permission lvl
--------|-----------|----------|-------
-sadmin | sadmin@gmail.com | sadmin | sadmin
-gadmin | gadmin@gmail.com | gadmin | gadmin
-aadmin | aadmin@gmail.com | aadmin | aadmin
-Billy | Billy@gmail.com | pwbilly | user
-Oliver | Oliver@gmail.com | pwoliver | user
-Amy | Amy@gmail.com | pwamy | user
+|Name | Email | Password | Permission lvl|
+|-------|-----------|----------|-------|
+|sadmin | sadmin@gmail.com | sadmin | sadmin|
+|gadmin | gadmin@gmail.com | gadmin | gadmin|
+|aadmin | aadmin@gmail.com | aadmin | aadmin|
+|Billy | Billy@gmail.com | pwbilly | user|
+|Oliver | Oliver@gmail.com | pwoliver | user|
+|Amy | Amy@gmail.com | pwamy | user|
 
 ### REST API
 The 2 files contains server side and client side. They both should be run then the application will excute properly. app-routing.module.ts is the main file that process the
