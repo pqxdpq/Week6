@@ -18,7 +18,7 @@ should be displayed in available list, etc.
 In my project, there are 4 main data groups, I will show them in a table for better view.
 ** Auth Table **
 Permission lvl | Accessed room/group code | User name
-----------------|---------------
+----------------|---------------|---------------
 sadmin| 1,2,3,4,5,6,7,8 | sadmin
 gadmin| 1,2,3,4,5,6,7,8 | gadmin
 aadmin| 1,2,3,4,5,6,7,8 | aadmin
@@ -36,7 +36,7 @@ Basketball | 4
 
 ** Room Table **
 Parent name | Room name | room code
-----------------|---------------
+----------------|---------------|----------
 National | Animals | 5
 National | Plants | 6
 FPS game | aiming | 7
@@ -46,7 +46,7 @@ Basketball | Players | 10
 
 ** User Table **
 Name | Email | Password | Permission lvl
-----------------|---------------
+-------|-----------|----------|-------
 sadmin | sadmin@gmail.com | sadmin | sadmin
 gadmin | gadmin@gmail.com | gadmin | gadmin
 aadmin | aadmin@gmail.com | aadmin | aadmin
