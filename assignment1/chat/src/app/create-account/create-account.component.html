@@ -51,7 +51,7 @@
           <div *ngIf="curuserrole!=='aadmin'">
             <button (click)="savechanges()">save</button>
             <button *ngIf="deletecheck" (click)="confirmdel()" class="delete">Confirm</button>
-            <button  (click)="deletecheckfc()" class="delete">Delete User</button>
+            <button  *ngIf="curuserrole===sadmin"  (click)="deletecheckfc()" class="delete">Delete User</button>
           </div>
         </form>
       </div>
