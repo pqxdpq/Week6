@@ -1,6 +1,6 @@
 const { ObjectId } = require("bson");
 
-module.exports = function(db,app,ObjectID){
+module.exports = function(db,app){
     app.post('/api/deletegroup',function(req,res){
         if(!req.body){
             return res.sendStatus(400);
