@@ -25,8 +25,13 @@ export class CommonService {
     return this.http.post<any>('http://localhost:3000/api/adduser', user);
   }
 
-  getlist(val){
-    return this.http.get<any>('http://localhost:3000/api/getlist',val);
+  getauthlist(username){
+    console.log("getauthlist")
+    return this.http.post<any>('http://localhost:3000/api/getauthlist',{"username":username});
+  }
+
+  getgrouplist(id){
+    return this.http.post<any>('http://localhost:3000/api/getgrouplist',{"id":id});
   }
   
   getlargest(){
@@ -37,8 +42,8 @@ export class CommonService {
     return this.http.get<any>('http://localhost:3000/api/getmessage',val);
   }
 
-  login(login){
-    return this.http.post<any>('http://localhost:3000/api/login',login);
+  login(username, password){
+    return this.http.post<any>('http://localhost:3000/api/login',{"username":username, "password":password});
   }
 
   message(message:Message){

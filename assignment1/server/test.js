@@ -16,16 +16,14 @@ const io = require('socket.io') (http, {
 const sockets = require('./socket.js');
 const server = require('./listen.js');
 const MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 const url = 'mongodb://localhost:27017';
-
 //Define port used for the server
 const PORT = 3000;
 
 // Apply express middleware
 app.use(cors());
 app.use(bodyParser.json());
-//setup Socket
-sockets.connect(io, PORT)
 MongoClient.connect(url, {maxPoolSize:10, useNewUrlParser: true, useUnifiedTopology: true},function(err,client){
   if (err){ return console.log(err)}
       const dbName = 'chat';
@@ -34,7 +32,7 @@ MongoClient.connect(url, {maxPoolSize:10, useNewUrlParser: true, useUnifiedTopol
       require('./routes/api-addgroup')(db,app);
       require('./routes/api-addroom')(db,app);
       require('./routes/api-adduser')(db,app);
-      require('./routes/api-getauthlist')(db,app);
+      require('./routes/api-getlist')(db,app);
       require('./routes/api-getmessage')(db,app);
       require('./routes/api-login')(db,app);
       require('./routes/api-removegroup')(db,app);
@@ -44,5 +42,14 @@ MongoClient.connect(url, {maxPoolSize:10, useNewUrlParser: true, useUnifiedTopol
       //require('./routes/api-updateuser')(db,app);
 
 });
+//setup Socket
+sockets.connect(io, PORT)
+
 //Start server listening for requests.
-server.listen(http,PORT);
+
+app.listen (PORT,( )=>{
+      let d = new Date();
+      let h  = d.getHours();
+      let m = d.getMinutes();
+      console.log('Server has been started on port' + PORT + ' at ' + h + '.' +m);
+});
