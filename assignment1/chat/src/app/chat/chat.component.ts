@@ -125,7 +125,9 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  
+  //private addGroup(){
+    //this._commonService.addgroup(this.newgroupname)
+  //}
 
   private logout(){
     sessionStorage.setItem('role','');
