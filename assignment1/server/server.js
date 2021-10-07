@@ -31,6 +31,7 @@ MongoClient.connect(url, {maxPoolSize:10, useNewUrlParser: true, useUnifiedTopol
       const dbName = 'chat';
       const db = client.db(dbName);
 
+      require('./routes/api-updateauth')(db,app);
       require('./routes/api-addgroup')(db,app);
       require('./routes/api-addroom')(db,app);
       require('./routes/api-adduser')(db,app);
@@ -38,6 +39,7 @@ MongoClient.connect(url, {maxPoolSize:10, useNewUrlParser: true, useUnifiedTopol
       require('./routes/api-getgroups')(db,app);
       require('./routes/api-getrooms')(db,app);
       require('./routes/api-getmessage')(db,app);
+      require('./routes/api-getlargest')(db,app);
       require('./routes/api-login')(db,app);
       require('./routes/api-removegroup')(db,app);
       require('./routes/api-removeroom')(db,app);

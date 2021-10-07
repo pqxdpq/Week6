@@ -29,6 +29,10 @@ export class CommonService {
     return this.http.post<any>('http://localhost:3000/api/getauth',{"username":username});
   }
 
+  updateauth(role,authcode){
+    return this.http.post<any>('http://localhost:3000/api/updateauth',{"role":role,"authcode":authcode});
+  }
+
   getgroups(id){
     return this.http.post<any>('http://localhost:3000/api/getgroups',{"id":id});
   }
@@ -58,8 +62,8 @@ export class CommonService {
     return this.http.post<any>('http://localhost:3000/api/removegroup', group);
   }
 
-  removeroom(room:Room){
-    return this.http.post<any>('http://localhost:3000/api/removeroom', room);
+  removeroom(id){
+    return this.http.post<any>('http://localhost:3000/api/removeroom', {"id":id});
   }
 
   removeuser(user:User){

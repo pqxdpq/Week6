@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../services/socket.service';
-import {FormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from '../services/common.service';
-import {Message} from '../chat';
+import {Group, Message, Room} from '../chat';
 
 @Component({
   selector: 'app-chat',
@@ -28,6 +27,7 @@ export class ChatComponent implements OnInit {
     newroomname:string="";
     users:string[] = [];
     authlist= [];
+    largest:number;
     
   constructor(private socketService:SocketService,private router: Router,private _commonService: CommonService) { }
 
@@ -53,12 +53,17 @@ export class ChatComponent implements OnInit {
     console.log("run getauth")
     this._commonService.getauth(this.username).subscribe((data)=>{
       this.authlist = data[0].authcode;
+      this._commonService.getlargest().subscribe((data)=>{
+        this.largest = data[0].max+1;
+        console.log(this.largest);
+      })
       this.getGroups();
     })
   }
 
   private getGroups(){
     console.log("run getgroups")
+    this.groups = [];
     for(let x in this.authlist){
       this._commonService.getgroups(this.authlist[x]).subscribe((data)=>{
         if(data.length){
@@ -69,6 +74,7 @@ export class ChatComponent implements OnInit {
   }
 
   private displayroom(groupname){
+    this.curgroup = groupname;
     this.rooms = [];
     this._commonService.getroom(groupname).subscribe((data)=>{
       for(let x in data){
@@ -125,9 +131,46 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  //private addGroup(){
-    //this._commonService.addgroup(this.newgroupname)
-  //}
+  private updateAuth(role, authcode){
+    this._commonService.updateauth(role, authcode).subscribe((data)=>{
+      console.log(data);
+    })
+  }
+
+  private addGroup(){
+    let newgroup = new Group("", this.newgroupname, this.largest);
+    this._commonService.addgroup(newgroup).subscribe((data)=>{
+      if(data.err == null){
+        this.updateAuth("sadmin",this.largest);
+        this.updateAuth("gadmin",this.largest);
+        this.updateAuth("aadmin",this.largest);
+        this.getAuth();
+      }
+    })
+    }
+  
+  private rmroom(id){
+    this._commonService.removeroom(id).subscribe((data)=>{
+      console.log(data)
+    })
+    this.displayroom(this.curgroup);
+  }
+
+  private addRoom(){
+    let newroom = new Room("", this.curgroup, this.newroomname, this.largest);
+    if(this.curgroup == "" || this.curgroup == null){
+      return 
+    }
+      this._commonService.addroom(newroom).subscribe((data)=>{
+      if(data.err == null){
+        this.updateAuth("sadmin",this.largest);
+        this.updateAuth("gadmin",this.largest);
+        this.updateAuth("aadmin",this.largest);
+        this.getAuth();
+        this.displayroom(this.curgroup);
+        }
+      })
+  }
 
   private logout(){
     sessionStorage.setItem('role','');
