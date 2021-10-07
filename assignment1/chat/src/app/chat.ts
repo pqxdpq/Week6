@@ -42,15 +42,15 @@ export class Room {
 
 export class Message {
     objectid: string;
-    groupname: string;
-    roomname: string;
+    roomid: number;
+    sender: string;
     message: string;
     date: Date;
 
-    constructor(objectid: string, groupname:string,roomname: string,message: string, date:Date){
+    constructor(objectid: string,roomid: number, sender:string,message: string, date:Date){
         this.objectid = objectid;
-        this.groupname = groupname;
-        this.roomname = roomname;
+        this.roomid = roomid;
+        this.sender = sender;
         this.message = message;
         this.date = date;
     }

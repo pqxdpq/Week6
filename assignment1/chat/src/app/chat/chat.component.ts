@@ -3,6 +3,7 @@ import { SocketService } from '../services/socket.service';
 import {FormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from '../services/common.service';
+import {Message} from '../chat';
 
 @Component({
   selector: 'app-chat',
@@ -19,8 +20,9 @@ export class ChatComponent implements OnInit {
     grole:boolean;
     arole:boolean;
     groups: string[] = [];
-    rooms: string[] = [];
+    rooms: any[] = [];
     curroom: string;
+    curroomid: number;
     curgroup:string;
     newgroupname:string="";
     newroomname:string="";
@@ -32,11 +34,24 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     this.initIoConnection();
     this.getAuth();
+    this.checkrole();
+    sessionStorage.getItem("username")
+  }
+
+  private checkrole(){
+    let currole = sessionStorage.getItem("role");
+    if (currole == "sadmin"){
+      this.srole = true;
+    }else if(currole == "gadmin"){
+      this.grole = true;
+    }else if (currole == "aadmin"){
+      this.arole = true;
+    }
   }
 
   private getAuth(){
     console.log("run getauth")
-    this._commonService.getauthlist(this.username).subscribe((data)=>{
+    this._commonService.getauth(this.username).subscribe((data)=>{
       this.authlist = data[0].authcode;
       this.getGroups();
     })
@@ -44,12 +59,38 @@ export class ChatComponent implements OnInit {
 
   private getGroups(){
     console.log("run getgroups")
-    console.log(this.authlist)
     for(let x in this.authlist){
-      this._commonService.getgrouplist(x).subscribe((data)=>{
-          console.log(data)
+      this._commonService.getgroups(this.authlist[x]).subscribe((data)=>{
+        if(data.length){
+          this.groups.push(data[0].groupname)
+        }
       })
-    }
+    }  
+  }
+
+  private displayroom(groupname){
+    this.rooms = [];
+    this._commonService.getroom(groupname).subscribe((data)=>{
+      for(let x in data){
+        this.rooms.push([data[x].roomname, data[x].id]);
+      }
+    })
+  }
+
+  private message(id, username, msg){
+    let dateTime = new Date();
+    let newmessage = new Message("", id, username, msg, dateTime)
+    this._commonService.message(newmessage).subscribe((data)=>{
+      console.log('sent');
+    })
+  }
+
+  private getmessage(roomid){
+    this._commonService.getmessage(roomid).subscribe((data)=>{
+      for (let x in data){
+        this.messages.push([data[x].message,data[x].sender]);
+      }
+    })
   }
 
   private initIoConnection(){
@@ -61,6 +102,7 @@ export class ChatComponent implements OnInit {
 });
 }
   private chat() {
+    this.message(this.curroomid, this.username, this.messagecontent);
     if(this.messagecontent) {
     // chek there is a message to send
     this.socketService.send(this.messagecontent,this.username);
@@ -72,15 +114,18 @@ export class ChatComponent implements OnInit {
 }
 
   private changeroom(val){
-    console.log(this.users);
     this.messages = [];
-    this.curroom = val;
+    this.getmessage(val[1]);
+    this.curroom = val[0];
+    this.curroomid = val[1];
     this.socketService.chgRoom(this.curroom)
     .subscribe(([message, name]) => {
     //add new message to the messages array.
     this.messages.push([message, name]);
     });
   }
+
+  
 
   private logout(){
     sessionStorage.setItem('role','');

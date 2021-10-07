@@ -34,7 +34,9 @@ MongoClient.connect(url, {maxPoolSize:10, useNewUrlParser: true, useUnifiedTopol
       require('./routes/api-addgroup')(db,app);
       require('./routes/api-addroom')(db,app);
       require('./routes/api-adduser')(db,app);
-      require('./routes/api-getauthlist')(db,app);
+      require('./routes/api-getauth')(db,app);
+      require('./routes/api-getgroups')(db,app);
+      require('./routes/api-getrooms')(db,app);
       require('./routes/api-getmessage')(db,app);
       require('./routes/api-login')(db,app);
       require('./routes/api-removegroup')(db,app);
