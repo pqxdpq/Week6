@@ -18,7 +18,7 @@ export class ChatComponent implements OnInit {
     srole:boolean;
     grole:boolean;
     arole:boolean;
-    groups: string[] = [];
+    groups: any[] = [];
     rooms: any[] = [];
     curroom: string;
     curroomid: number;
@@ -55,7 +55,6 @@ export class ChatComponent implements OnInit {
       this.authlist = data[0].authcode;
       this._commonService.getlargest().subscribe((data)=>{
         this.largest = data[0].max+1;
-        console.log(this.largest);
       })
       this.getGroups();
     })
@@ -67,7 +66,7 @@ export class ChatComponent implements OnInit {
     for(let x in this.authlist){
       this._commonService.getgroups(this.authlist[x]).subscribe((data)=>{
         if(data.length){
-          this.groups.push(data[0].groupname)
+          this.groups.push([data[0].groupname,data[0].id])
         }
       })
     }  
@@ -133,7 +132,6 @@ export class ChatComponent implements OnInit {
 
   private updateAuth(role, authcode){
     this._commonService.updateauth(role, authcode).subscribe((data)=>{
-      console.log(data);
     })
   }
 
@@ -148,6 +146,13 @@ export class ChatComponent implements OnInit {
       }
     })
     }
+
+  private rmgroup(group){
+    console.log(group);
+    this._commonService.removegroup(group[0],group[1]).subscribe((data)=>{
+    })
+    this.getAuth();
+  }
   
   private rmroom(id){
     this._commonService.removeroom(id).subscribe((data)=>{
@@ -170,6 +175,10 @@ export class ChatComponent implements OnInit {
         this.displayroom(this.curgroup);
         }
       })
+  }
+
+  private rmauthcode(){
+
   }
 
   private logout(){

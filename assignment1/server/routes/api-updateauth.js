@@ -6,7 +6,7 @@ module.exports = function(db,app){
         auth = req.body;
         const collection = db.collection('Auth');
         collection.updateMany({"role":auth.role}, {$push:{"authcode":auth.authcode}},()=>{
-            res.send("success")
+            res.send({"success":"success"})
         })
     });
 }

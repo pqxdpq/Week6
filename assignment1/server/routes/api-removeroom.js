@@ -3,5 +3,6 @@ module.exports = function(db,app){
         room = req.body;
         const collection = db.collection('Room');
         collection.deleteOne({"id":room.id})
+        db.collection("Auth").updateMany({},{$pull:{"authcode":room.id}})
     })
 }

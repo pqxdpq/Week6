@@ -24,12 +24,12 @@
             </div>
           </div>
           <div *ngFor="let group of groups">
-            <button (click)="displayroom(group)" class="unstyled-button">
+            <button (click)="displayroom(group[0])" class="unstyled-button">
             <div class="chat_list active_chat">
               <div class="chat_people">
                 <div class="chat_img"> <img src="https://www.pngkit.com/png/full/128-1284523_group-chat-icon-google-group-chat-icon.png" alt="sunil"> </div>
                 <div class="chat_ib">
-                  <h5>{{group}}</h5>
+                  <h5>{{group[0]}}</h5>
                 </div>
                 <button *ngIf='srole || grole' (click)="rmgroup(group)" class="delbtn"><img src="../../assets/delbtn.png"></button>
               </div>

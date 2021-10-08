@@ -58,8 +58,8 @@ export class CommonService {
     return this.http.post<any>('http://localhost:3000/api/message', message);
   }
 
-  removegroup(group:Group){
-    return this.http.post<any>('http://localhost:3000/api/removegroup', group);
+  removegroup(groupname, id){
+    return this.http.post<any>('http://localhost:3000/api/removegroup', {"groupname":groupname, "id":id});
   }
 
   removeroom(id){
