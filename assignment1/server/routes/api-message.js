@@ -9,6 +9,7 @@ module.exports = function(db, app){
         collection.insertOne({"roomid":set.roomid, "sender":set.sender, "message":set.message, "date":isodate}, (err, msg)=>{
             if(err)throw err;
             res.send({'message':msg, err:null});
+            console.log(set);
         })
     });
 }
