@@ -116,15 +116,11 @@ img{ max-width:100%;}
 .received_withd_msg { width: 57%;}
 .mesgs {
   float: left;
-  padding:  0px;
+  padding: 30px 0px 0 0px;
   width: 57%;
   background: #f8f8f8 none repeat scroll 0 0;
   height: 603.98px;
 
-}
-
-.curgpaNroom{
-  text-align: center;
 }
 
  .sent_msg p {

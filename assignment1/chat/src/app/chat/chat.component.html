@@ -55,7 +55,7 @@
             </div>
           </div>
           <div *ngFor="let room of rooms">
-            <button (click)="changeroom(room)" class="unstyled-button">
+            <button (click)="changeroom(room[1])" class="unstyled-button">
             <div class="chat_list active_chat">
               <div class="chat_people">
                 <div class="chat_img"> <img src="https://www.pngkit.com/png/full/128-1284523_group-chat-icon-google-group-chat-icon.png" alt="sunil"> </div>
@@ -74,9 +74,6 @@
       
 
         <div class="mesgs">
-          <div class="curgpaNroom">
-            <h2>{{curgroup}}   {{curroom}}</h2>
-          </div>
           <div class="msg_history">
             <div *ngFor="let message of messages">
               <div class="incoming_msg" *ngIf="message[1] != username; else outgoing">

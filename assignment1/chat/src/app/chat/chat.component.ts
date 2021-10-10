@@ -107,7 +107,6 @@ export class ChatComponent implements OnInit {
 });
 }
   private chat() {
-    console.log(this.curroomid)
     this.message(this.curroomid, this.username, this.messagecontent);
     if(this.messagecontent) {
     // chek there is a message to send
@@ -177,6 +176,10 @@ export class ChatComponent implements OnInit {
         this.displayroom(this.curgroup);
         }
       })
+  }
+
+  private rmauthcode(){
+
   }
 
   private logout(){
