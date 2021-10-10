@@ -110,7 +110,7 @@ export class ChatComponent implements OnInit {
     this.message(this.curroomid, this.username, this.messagecontent);
     if(this.messagecontent) {
     // chek there is a message to send
-    this.socketService.send(this.messagecontent,this.username);
+    this.socketService.send(this.messagecontent,this.username, this.curroomid);
     console.log(this.username + " says " + this.messagecontent, ' in ',this.curroom);
     this.messagecontent=null;
     }else{
@@ -125,9 +125,11 @@ export class ChatComponent implements OnInit {
     this.curroom = val[0];
     this.curroomid = val[1];
     this.socketService.chgRoom(this.curroom)
-    .subscribe(([message, name]) => {
+    .subscribe(([message, name, id]) => {
     //add new message to the messages array.
-    this.messages.push([message, name]);
+    if (id == this.curroomid){
+        this.messages.push([message, name]);
+    }
     });
   }
 
@@ -176,10 +178,6 @@ export class ChatComponent implements OnInit {
         this.displayroom(this.curgroup);
         }
       })
-  }
-
-  private rmauthcode(){
-
   }
 
   private logout(){

@@ -4,12 +4,17 @@ module.exports = {
         global.room="";
         io.on('connection', (socket) => {
         socket.on('leave',function(room){
-            socket.leaveAll()
+            console.log('room',socket.rooms)
+            socket.leave(room)
+            const listener = (...arg) =>{
+                console.log(arg);
+            }
+            socket.off(room, listener);
         })
         socket.on('passdata', function (data) {
+            console.log(socket.id,data);
             room = data;
             socket.join(room);
-            console.log('room',room)
             //io.emit(room);
             if(!socket.id in userset){
                 userset.push({
@@ -19,12 +24,13 @@ module.exports = {
             }else{
               userset[socket.id] = room  
             }
+            console.log(socket.rooms);
             });
         socket.on('message', function(message){
-            console.log(userset)
-            io.to(userset[socket.id]).emit(message)
-            console.log(io.sockets.adapter.rooms)
+            io.emit(userset[socket.id],message)
+            console.log(socket.rooms)
             console.log(socket.id + ' say ' + message + ' in ' + userset[socket.id]);
+            
         })
         // When a connection request comes in output to the server console
         console.log('user connection on port '+ PORT + ' : '+ socket.id);
