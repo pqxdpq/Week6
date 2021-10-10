@@ -120,6 +120,7 @@ export class ChatComponent implements OnInit {
 }
 
   private changeroom(val){
+    this.socketService.levRoom(this.curroom);
     this.messages = [];
     this.getmessage(val[1]);
     this.curroom = val[0];
