@@ -12,6 +12,7 @@ import {Group, Message, Room} from '../chat';
 export class ChatComponent implements OnInit {
 
     messagecontent:string="";
+    selectedfile= null;
     messages:any[] = [];
     ioConnection:any;
     username = sessionStorage.getItem('username');
@@ -108,7 +109,7 @@ export class ChatComponent implements OnInit {
 }
   private chat() {
     this.message(this.curroomid, this.username, this.messagecontent);
-    if(this.messagecontent) {
+    if(this.messagecontent != "") {
     // chek there is a message to send
     this.socketService.send(this.messagecontent,this.username, this.curroomid);
     console.log(this.username + " says " + this.messagecontent, ' in ',this.curroom);
@@ -120,10 +121,12 @@ export class ChatComponent implements OnInit {
 
   private changeroom(val){
     this.socketService.levRoom(this.curroom);
+    this.socketService.send(this.username + " just left", "Server", this.curroomid)
     this.messages = [];
     this.getmessage(val[1]);
     this.curroom = val[0];
     this.curroomid = val[1];
+    this.socketService.send(this.username + " just joined", "Server", this.curroomid)
     this.socketService.chgRoom(this.curroom)
     .subscribe(([message, name, id]) => {
     //add new message to the messages array.
@@ -180,9 +183,19 @@ export class ChatComponent implements OnInit {
       })
   }
 
+  public onFileSelected(event){
+    this.selectedfile = event.target.file[0];
+  }
+
   private logout(){
     sessionStorage.setItem('role','');
     sessionStorage.setItem('username', '');
     this.router.navigate(['login']); 
+  }
+
+  private account(){
+    if(this.srole || this.grole || this.arole){
+      this.router.navigate(['createac']); 
+    }
   }
 }

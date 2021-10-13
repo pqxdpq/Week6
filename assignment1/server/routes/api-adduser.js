@@ -1,5 +1,5 @@
 module.exports = function(db, app){
-    app.post('/api/addu',function(req, res){
+    app.post('/api/adduser',function(req, res){
         if(!req.body){
             return res.sendStatus(400)
         }
@@ -7,12 +7,12 @@ module.exports = function(db, app){
         const collection = db.collection('User');
         collection.find({'username':user.name}).count((err,count)=>{
             if(count == 0){
-                collection.insertOne(user, (err, dbres)=>{
+                collection.insertOne({"username":user.username,"email":user.email,"password":user.password,"role":user.role}, (err, dbres)=>{
                     if(err)throw err;
                     let num = dbres.insertedCount;
                     res.send({'num':num, err:null});
                 })
-                var newauth = {"username":user.name, "authcode":[]};
+                var newauth = {"username":user.username, "authcode":[]};
                 db.collection('Auth').insertOne(newauth);
             }else{
                 res.send({num:0, err:"Name used"});

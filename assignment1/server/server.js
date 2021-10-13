@@ -32,6 +32,8 @@ MongoClient.connect(url, {maxPoolSize:10, useNewUrlParser: true, useUnifiedTopol
       const db = client.db(dbName);
 
       require('./routes/api-updateauth')(db,app);
+      require('./routes/api-getlist')(db,app);
+      require('./routes/api-getuser')(db,app);
       require('./routes/api-addgroup')(db,app);
       require('./routes/api-addroom')(db,app);
       require('./routes/api-adduser')(db,app);
@@ -45,7 +47,8 @@ MongoClient.connect(url, {maxPoolSize:10, useNewUrlParser: true, useUnifiedTopol
       require('./routes/api-removeroom')(db,app);
       require('./routes/api-removeuser')(db,app);
       require('./routes/api-message')(db,app);
-      //require('./routes/api-updateuser')(db,app);
+      require('./routes/api-updateuser')(db,app);
+      require('./routes/api-updateuauth')(db,app);
 
 });
 //Start server listening for requests.

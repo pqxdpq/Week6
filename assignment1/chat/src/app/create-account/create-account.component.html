@@ -50,6 +50,7 @@
           </div></div>
           <div *ngIf="curuserrole!=='aadmin'">
             <button (click)="savechanges()">save</button>
+            <button (click)="deletecheckfc()">delete</button>
             <button *ngIf="deletecheck" (click)="confirmdel()" class="delete">Confirm</button>
             <button  *ngIf="curuserrole===sadmin"  (click)="deletecheckfc()" class="delete">Delete User</button>
           </div>
@@ -114,14 +115,14 @@
               <button class="button5" (click)="adduser()">++ Add New User ++</button>
             </div>
             <div  *ngFor='let user of userArray'>
-              <div class="user_list" *ngIf="curuserrole==='aadmin' && user[3]==='user'">
-                <button class="button4" (click)="selectuser(user)">{{user[0]}}</button>
+              <div class="user_list" *ngIf="curuserrole==='aadmin' && user.role==='user'">
+                <button class="button4" (click)="selectuser(user)">{{user.username}}</button>
               </div>
-              <div class="user_list" *ngIf="curuserrole==='gadmin' && user[3]!=='sadmin'">
-                <button class="button4" (click)="selectuser(user)">{{user[0]}}</button>
+              <div class="user_list" *ngIf="curuserrole==='gadmin' && user.role!=='sadmin'">
+                <button class="button4" (click)="selectuser(user)">{{user.username}}</button>
               </div>
               <div class="user_list" *ngIf="curuserrole==='sadmin'">
-                <button class="button4" (click)="selectuser(user)">{{user[0]}}</button>
+                <button class="button4" (click)="selectuser(user)">{{user.username}}</button>
               </div>
             </div>
           </div>

@@ -33,6 +33,14 @@ export class CommonService {
     return this.http.post<any>('http://localhost:3000/api/updateauth',{"role":role,"authcode":authcode});
   }
 
+  updateuauth(username,authcode){
+    return this.http.post<any>('http://localhost:3000/api/updateuauth',{"username":username,"authcode":authcode});
+  }
+
+  updateuser(user:User){
+    return this.http.post<any>('http://localhost:3000/api/updateuser', user);
+  }
+
   getgroups(id){
     return this.http.post<any>('http://localhost:3000/api/getgroups',{"id":id});
   }
@@ -43,6 +51,14 @@ export class CommonService {
   
   getlargest(){
     return this.http.get<any>('http://localhost:3000/api/getlargest');
+  }
+
+  getuser(){
+    return this.http.get<any>('http://localhost:3000/api/getuser');
+  }
+
+  getlist(val){
+    return this.http.post<any>('http://localhost:3000/api/getlist',{"val":val});
   }
 
   getmessage(val){
@@ -66,7 +82,7 @@ export class CommonService {
     return this.http.post<any>('http://localhost:3000/api/removeroom', {"id":id});
   }
 
-  removeuser(user:User){
-    return this.http.post<any>('http://localhost:3000/api/removeuser', user);
+  removeuser(username){
+    return this.http.post<any>('http://localhost:3000/api/removeuser', {"username":username});
   }
 }

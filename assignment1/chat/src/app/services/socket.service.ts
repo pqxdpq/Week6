@@ -12,6 +12,7 @@ export class SocketService {
   this.socket = io(SERVER_URL);
   }
   public chgRoom(somedata): Observable<any> {
+    //somedata is the room name
     this.socket.emit('passdata', somedata);
     let observable = new Observable(observer=>{
     this.socket.on(somedata, (data:[string, string]) => observer.next(data));
@@ -26,6 +27,7 @@ export class SocketService {
   public send(message: string, name:string, curroomid:number): void {
   this.socket.emit('message', [message,name,curroomid]);
   }
+  //onMessage is the init join room function, but now not using 
   public onMessage(somedata): Observable<any> {
   let observable = new Observable(observer=>{
   this.socket.on(somedata, (data:[string, string,number]) => observer.next(data));

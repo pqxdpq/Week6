@@ -4,18 +4,18 @@ module.exports = {
         global.room="";
         io.on('connection', (socket) => {
         socket.on('leave',function(room){
-            console.log('room',socket.rooms)
             socket.leave(room)
             const listener = (...arg) =>{
                 console.log(arg);
             }
             socket.off(room, listener);
         })
+        //passdata is function to change room. leave will be called first before calling passdata
         socket.on('passdata', function (data) {
             console.log(socket.id,data);
             room = data;
             socket.join(room);
-            //io.emit(room);
+            //userset is to check the current room that socket is in. will change when leave and join room
             if(!socket.id in userset){
                 userset.push({
                     key: socket.id,

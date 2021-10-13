@@ -78,14 +78,19 @@
           <div class="msg_history">
             <div *ngFor="let message of messages">
               <div class="incoming_msg" *ngIf="message[1] != username; else outgoing">
-                <div class="incoming_msg_img"><p>{{message[1]}}:</p></div>
+                <div class="incoming_msg_img" *ngIf="message[1] != 'Server';else server"><p>{{message[1]}}:</p></div>
                 <div class="received_msg">
-                  <div class="received_withd_msg">
+                  <div class="received_withd_msg" *ngIf="message[1] != 'Server';">
                     <p>{{message[0]}}</p>
                     <br>
                   </div>
                 </div>
               </div>
+              <ng-template #server>
+                <div class="server_msg">
+                  <p>{{message[0]}}</p>
+                </div>
+              </ng-template>
               <ng-template #outgoing>
                 <div class="outgoing_msg">
                   <div class="sent_msg">
@@ -98,6 +103,7 @@
             <div class="type_msg">
               <div class="input_msg_write">
                 <form><input type="text" [(ngModel)]="messagecontent" name="messagecontent" id="messagecontent" class="write_msg"/>
+                <input type="file" class="form-control" (change)="onFileSelected($event)" name="uploadfile" id = "uploadfile" />
                 <button (click)="chat(messagecontent)" class="msg_send_btn">Send</button></form>
               </div>
             </div>

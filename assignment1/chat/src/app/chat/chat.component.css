@@ -136,6 +136,11 @@ img{ max-width:100%;}
   float: right;
   width: 46%;
 }
+.server_msg{ overflow:hidden; 
+  margin:26px 25% 26px;
+  text-align: center;
+  width: 46%;
+}
 .input_msg_write input {
   background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
   border: medium none;
